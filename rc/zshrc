@@ -1,8 +1,8 @@
 # tell zsh to parse my custom path for functions
-fpath=(~/.zsh/functions $fpath)
+fpath=($ZSH_HOME/functions $fpath)
 
 # load custom completion stuff
-autoload -U ~/.zsh/functions/*(:t)
+autoload -U $ZSH_HOME/functions/*(:t)
 
 # initialize completion system
 autoload -U compinit
