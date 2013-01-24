@@ -1,5 +1,11 @@
 #compdef tat
 
+# Custom completion for the command "tat".
+# Tat is a small script usually in ~/bin, that will receive one argument as
+# the name of tmux session. So "tat session_name" will call "tmux attach -t session_name"
+# The goal is to provide a completion that lists all sessions so I can quickly see them together.
+# This completion uses the function _tmux_sessions which will do the real job.
+
 local curcontext="$curcontext" line state ret=1
         
 _arguments -C \
