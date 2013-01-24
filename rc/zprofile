@@ -8,6 +8,8 @@ export EDITOR=vim
 export WINEDITOR=gvim
 
 # source private zprofile
+# that file contains settings of
+# PATH, MANPATH, http_proxy, CLEARCASE_AVOBS, and stuff like that
 PRIVATE_FILE="$ZSH_HOME/rc/zprofile.private"
 test -s $PRIVATE_FILE && . $PRIVATE_FILE || true 
 
