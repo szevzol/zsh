@@ -1,5 +1,7 @@
 #compdef tat
 
+# " vim:syntax=zsh
+
 # Custom completion for the command "tat".
 # Tat is a small script usually in ~/bin, that will receive one argument as
 # the name of tmux session. So "tat session_name" will call "tmux attach -t session_name"
