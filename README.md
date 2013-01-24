@@ -19,3 +19,8 @@ export ZSH_HOME="$HOME/etc/zsh"
 ```sh
 ln -s ~/etc/zsh/rc/zshrc ~/.zshrc
 ```
+
+The private files
+-----------------
+
+The rc/zprofile and rc/alias files will source their private counterparts zprofile.private and alias.private. These private files contain settings which I don't want to share on GitHub and which are very environment specific. E.g. on Windows Cygwin environment I have some extra aliases to step into some directories that have long Winddows paths. I put them into the private file since I use them only in one environment.
