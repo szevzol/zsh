@@ -48,12 +48,18 @@ export LS_OPTIONS='--color=auto'
 export GREP_OPTIONS='--color=auto'
 
 # save the current clearcase view
-export CURRENT_VIEW="$(cleartool pwv -s)"
+prompt_ccview=" "
+
+if [ -x /usr/atria/bin/cleartool ]; then
+    export CURRENT_VIEW="$(/usr/atria/bin/cleartool pwv -s)"
+    prompt_ccview=" [$CURRENT_VIEW] "
+fi
+
 
 # hack to avoid zsh rendering bug (in some cases zsh removes one line from history buffer when prompt is multiline)
 # in fact the first line of the prompt will be printed by precmd, instead of PROMPT
 function precmd {
-    echo "`tput bold`${USERNAME}@${HOST} [$CURRENT_VIEW] `mypwd`"
+    echo "`tput bold`${USERNAME}@${HOST}${prompt_ccview}`mypwd`"
 }
 
 # set the second line prompt

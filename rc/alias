@@ -25,6 +25,8 @@ alias sv=svfnc
 
 alias grep='grep --color=auto'
 
+alias ls='ls $LS_OPTIONS'
+
 # source private alias file
 PRIVATE_FILE="$ZSH_HOME/rc/alias.private"
 test -s $PRIVATE_FILE && . $PRIVATE_FILE || true 
