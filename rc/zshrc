@@ -1,0 +1,60 @@
+# tell zsh to parse my custom path for functions
+fpath=(~/.zsh/functions $fpath)
+
+# load custom completion stuff
+autoload -U ~/.zsh/functions/*(:t)
+
+# initialize completion system
+autoload -U compinit
+compinit
+
+# use ls colours for completion
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# use menu completion style when more than <select> matches
+# <select> may be fine tuned later on
+zstyle ':completion:*' menu select=5
+
+# some useful completion settings
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:descriptions' format '%B%d%b'
+zstyle ':completion:*:messages' format '%d'
+zstyle ':completion:*:warnings' format 'No matches for: %d'
+zstyle ':completion:*' group-name ''
+
+# use smart auto correction
+setopt correct
+
+# include the .alias file
+test -s $ZSH_HOME/rc/alias && . $ZSH_HOME/rc/alias || true
+ 
+# hacked pwd which will replace "/home/$USERNAME" with "~"
+function mypwd {
+    dir=`pwd`
+    finalpath=$dir
+    a=(${(s:/:)dir})
+    if [ $#a -gt 1 ]; then
+        if [ $a[1] = 'home' -a $a[2] = "$USERNAME" ]; then
+            finalpath='~'
+            if [ $#a -gt 2 ]; then
+                finalpath="${finalpath}${dir/\/home\/$USERNAME/}"
+            fi
+        fi
+    fi
+    echo "$finalpath"
+}
+
+export LS_OPTIONS='--color=auto'
+export GREP_OPTIONS='--color=auto'
+
+# save the current clearcase view
+export CURRENT_VIEW="$(cleartool pwv -s)"
+
+# hack to avoid zsh rendering bug (in some cases zsh removes one line from history buffer when prompt is multiline)
+# in fact the first line of the prompt will be printed by precmd, instead of PROMPT
+function precmd {
+    echo "`tput bold`${USERNAME}@${HOST} [$CURRENT_VIEW] `mypwd`"
+}
+
+# set the second line prompt
+PROMPT="%h> "

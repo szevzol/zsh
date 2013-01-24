@@ -1,0 +1,23 @@
+#" vim:syntax=zsh
+
+local desc session_names list out expl listargs ret=1
+
+out=("${(@f)$(tmux ls 2>/dev/null)}")
+
+session_names=()
+for out_line in $out; do
+    line_words=("${(s.:.)out_line}")
+    session_names+=($line_words[1])
+done
+
+if zstyle -T ":completion:${curcontext}:tmux_sessions" verbose; then
+  list=( "${(@Mr:COLUMNS-1:)out}" )
+  desc=(-ld list)
+else
+  desc=()
+fi
+
+_wanted tmux_sessions expl 'Tmux sessions' \
+    compadd "$@" "$desc[@]" -a session_names && ret=0
+
+return ret

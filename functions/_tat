@@ -1,0 +1,13 @@
+#compdef tat
+
+local curcontext="$curcontext" line state ret=1
+        
+_arguments -C \
+    '*: :->tmux_sessions' && ret=0
+
+if [[ -n "$state" ]]; then
+  _alternative \
+    'tmux_sessions:: _tmux_sessions' && ret=0
+fi
+
+return ret
