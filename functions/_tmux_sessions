@@ -1,4 +1,4 @@
-#" vim:syntax=zsh
+# " vim:syntax=zsh
 
 local desc session_names list out expl listargs ret=1
 
