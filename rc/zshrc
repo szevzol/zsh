@@ -34,7 +34,14 @@ function mypwd {
     finalpath=$dir
     a=(${(s:/:)dir})
     if [ $#a -gt 1 ]; then
-        if [ $a[1] = 'home' -a $a[2] = "$USERNAME" ]; then
+        if [ $a[1] = 'cygdrive' ]; then
+            if [ $a[4] = "$USERNAME" ]; then
+                finalpath='~'
+                if [ $#a -gt 4 ];then
+                    finalpath="${finalpath}${dir/\/cygdrive\/c\/Users\/$USERNAME/}"
+                fi
+            fi
+        elif [ $a[1] = 'home' -a $a[2] = "$USERNAME" ]; then
             finalpath='~'
             if [ $#a -gt 2 ]; then
                 finalpath="${finalpath}${dir/\/home\/$USERNAME/}"
