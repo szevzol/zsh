@@ -78,7 +78,7 @@ zle -N zle-keymap-select
 zle -N zle-line-init
 
 # Use vi command line mode
-set -o vi
+bindkey -v
 
 # In vi mode must redo this bind to use history search
 bindkey "^R" history-incremental-search-backward
