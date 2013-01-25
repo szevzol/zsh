@@ -62,17 +62,39 @@ if [ -x /usr/atria/bin/cleartool ]; then
     prompt_ccview=" [$CURRENT_VIEW] "
 fi
 
-if [ -n "$PROMPT_HACK" ];then
-    # hack to avoid zsh rendering bug (in some cases zsh removes one line from history buffer when prompt is multiline)
-    # in fact the first line of the prompt will be printed by precmd, instead of PROMPT
-    function precmd {
-        echo "`tput bold`${USERNAME}@${HOST}${prompt_ccview}`mypwd`"
-    }
-    PROMPT="%h> "
-else
-    # set the multiline prompt
-    PROMPT="%B${USERNAME}@${HOST}${prompt_ccview} %~%b"
-    PROMPT+='
-'
-    PROMPT+="%h> "
-fi
+# set VIMODE according to the current mode (default “i”, otherwise "n")
+VIMODE='i'
+
+# custom widget functions to update VIMODE
+function zle-line-init zle-keymap-select {
+    VIMODE="${${KEYMAP/vicmd/n}/(main|viins)/i}"
+    setprompt $VIMODE
+    zle reset-prompt
+    zle -R # this is needed otherwise pressing Ctrl+C in vicmd mode will not refresh the prompt
+}
+
+# tell zsh to use my custom widgets
+zle -N zle-keymap-select
+zle -N zle-line-init
+
+# Use vi command line mode
+set -o vi
+
+# In vi mode must redo this bind to use history search
+bindkey "^R" history-incremental-search-backward
+
+# Sets prompt colour depending on VIMODE
+function setprompt {
+    if [ $1 = "i" ]; then
+        PROMPT=$'\e[0;31m>>> \e[0m'
+    else
+        PROMPT=$'\e[0;32m>>> \e[0m'
+    fi
+}
+
+# hack to avoid zsh rendering bug (in some cases zsh removes one line from history buffer when prompt is multiline)
+# in fact the first line of the prompt will be printed by precmd, instead of PROMPT
+function precmd {
+    echo "`tput bold`${USERNAME}@${HOST}${prompt_ccview}`mypwd`"
+}
+setprompt $VIMODE
