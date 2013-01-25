@@ -62,12 +62,17 @@ if [ -x /usr/atria/bin/cleartool ]; then
     prompt_ccview=" [$CURRENT_VIEW] "
 fi
 
-
-# hack to avoid zsh rendering bug (in some cases zsh removes one line from history buffer when prompt is multiline)
-# in fact the first line of the prompt will be printed by precmd, instead of PROMPT
-function precmd {
-    echo "`tput bold`${USERNAME}@${HOST}${prompt_ccview}`mypwd`"
-}
-
-# set the second line prompt
-PROMPT="%h> "
+if [ -n "$PROMPT_HACK" ];then
+    # hack to avoid zsh rendering bug (in some cases zsh removes one line from history buffer when prompt is multiline)
+    # in fact the first line of the prompt will be printed by precmd, instead of PROMPT
+    function precmd {
+        echo "`tput bold`${USERNAME}@${HOST}${prompt_ccview}`mypwd`"
+    }
+    PROMPT="%h> "
+else
+    # set the multiline prompt
+    PROMPT="%B${USERNAME}@${HOST}${prompt_ccview} %~%b"
+    PROMPT+='
+'
+    PROMPT+="%h> "
+fi

@@ -1,5 +1,10 @@
 #" vim:syntax=zsh
  
+export HISTFILE=$HOME/.zsh_history
+setopt APPEND_HISTORY
+export HISTSIZE=1000
+export SAVEHIST=10000
+
 # let other programs know that we are using zsh
 export SHELL='/bin/zsh'
 
