@@ -51,13 +51,15 @@ function mypwd {
     echo "$finalpath"
 }
 
+# Use colourful ls and grep
 export LS_OPTIONS='--color=auto'
 export GREP_OPTIONS='--color=auto'
 
-# save the current clearcase view
-prompt_ccview=" "
+# This variable will be inserted to the prompt
+local prompt_ccview=" "
 
 if [ -x /usr/atria/bin/cleartool ]; then
+    # save the current clearcase view
     export CURRENT_VIEW="$(/usr/atria/bin/cleartool pwv -s)"
     prompt_ccview=" [$CURRENT_VIEW] "
 fi
@@ -97,4 +99,5 @@ function setprompt {
 function precmd {
     echo "`tput bold`${USERNAME}@${HOST}${prompt_ccview}`mypwd`"
 }
+
 setprompt $VIMODE
