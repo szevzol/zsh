@@ -67,12 +67,12 @@ fi
 # set VIMODE according to the current mode (default “i”, otherwise "n")
 VIMODE='i'
 
-# custom widget functions to update VIMODE
+# custom widget functions to update VIMODE and update the prompt
 function zle-line-init zle-keymap-select {
     VIMODE="${${KEYMAP/vicmd/n}/(main|viins)/i}"
     setprompt $VIMODE
     zle reset-prompt
-    zle -R # this is needed otherwise pressing Ctrl+C in vicmd mode will not refresh the prompt
+    zle -R # this is needed otherwise pressing Enter or Ctrl+C in vicmd mode will not refresh the prompt
 }
 
 # tell zsh to use my custom widgets
@@ -94,8 +94,9 @@ function setprompt {
     fi
 }
 
-# hack to avoid zsh rendering bug (in some cases zsh removes one line from history buffer when prompt is multiline)
-# in fact the first line of the prompt will be printed by precmd, instead of PROMPT
+# Hack to avoid zsh rendering bug: in custom widgets the multiline prompt can get updated several times after each other.
+# This multiple update is not handled correctly by zsh. The result is that last line is removed from the console buffer.
+# In fact the first line of the prompt will be printed by precmd, instead of PROMPT.
 function precmd {
     echo "`tput bold`${USERNAME}@${HOST}${prompt_ccview}`mypwd`"
 }
