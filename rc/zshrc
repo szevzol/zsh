@@ -87,18 +87,28 @@ bindkey "^R" history-incremental-search-backward
 
 # Sets prompt colour depending on VIMODE
 function setprompt {
-    if [ $1 = "i" ]; then
-        PROMPT=$'\e[0;31m>>> \e[0m' # Red for insert mode
-    else
-        PROMPT=$'\e[0;32m>>> \e[0m' # Green for normal mode
+    local p=""
+    if [ -z "$PROMPT_HACK" ];then
+        p+="%B${USERNAME}@${HOST}${prompt_ccview}%~%b"
+        p+='
+'
     fi
+
+    if [ $1 = "i" ]; then
+        p+=$'\e[0;31m>>> \e[0m' # Red for insert mode
+    else
+        p+=$'\e[0;32m>>> \e[0m' # Green for normal mode
+    fi
+    PROMPT=$p
 }
 
-# Hack to avoid zsh rendering bug: in custom widgets the multiline prompt can get updated several times after each other.
+# Hack to avoid zsh rendering bug in version earlier than 4.3.4 (?): in custom widgets the multiline prompt can get updated several times after each other.
 # This multiple update is not handled correctly by zsh. The result is that last line is removed from the console buffer.
 # In fact the first line of the prompt will be printed by precmd, instead of PROMPT.
+if [ -n "$PROMPT_HACK" ]; then
 function precmd {
     echo "`tput bold`${USERNAME}@${HOST}${prompt_ccview}`mypwd`"
 }
+fi
 
 setprompt $VIMODE
