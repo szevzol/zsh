@@ -88,9 +88,9 @@ bindkey "^R" history-incremental-search-backward
 # Sets prompt colour depending on VIMODE
 function setprompt {
     if [ $1 = "i" ]; then
-        PROMPT=$'\e[0;31m>>> \e[0m'
+        PROMPT=$'\e[0;31m>>> \e[0m' # Red for insert mode
     else
-        PROMPT=$'\e[0;32m>>> \e[0m'
+        PROMPT=$'\e[0;32m>>> \e[0m' # Green for normal mode
     fi
 }
 

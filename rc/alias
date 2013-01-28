@@ -16,9 +16,9 @@ alias tls='tmux ls'
 alias v=vim 
 
 # set clearcase view
-svfnc()
+function svfn ()
 {
-    /usr/atria/bin/cleartool setview `whoami`_$1
+    /usr/atria/bin/cleartool setview -exec "~/usr/bin/zsh" `whoami`_$1
 }
 
 alias sv=svfnc
