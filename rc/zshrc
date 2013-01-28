@@ -95,9 +95,9 @@ function setprompt {
     fi
 
     if [ $1 = "i" ]; then
-        p+=$'\e[0;31m>>> \e[0m' # Red for insert mode
+        p+=$'%{\e[0;31m%}>>> %{\e[0m%}' # Red for insert mode
     else
-        p+=$'\e[0;32m>>> \e[0m' # Green for normal mode
+        p+=$'%{\e[0;32m%}>>> %{\e[0m%}' # Green for normal mode
     fi
     PROMPT=$p
 }
