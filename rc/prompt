@@ -1,0 +1,78 @@
+#" vim:syntax=zsh
+
+# This variable will be inserted to the prompt
+local prompt_ccview=" "
+
+if [ -x /usr/atria/bin/cleartool ]; then
+    # save the current clearcase view
+    export CURRENT_VIEW="$(/usr/atria/bin/cleartool pwv -s)"
+    prompt_ccview=" [$CURRENT_VIEW] "
+fi
+
+# Set VIMODE according to the current mode (default “i”, otherwise "n")
+VIMODE='i'
+
+# Custom widget functions to update VIMODE and update the prompt
+function zle-line-init zle-keymap-select {
+    VIMODE="${${KEYMAP/vicmd/n}/(main|viins)/i}"
+    setprompt $VIMODE
+    zle reset-prompt
+    zle -R # this is needed otherwise pressing Enter or Ctrl+C in vicmd mode will not refresh the prompt
+}
+
+# Tell zsh to use my custom widgets
+zle -N zle-keymap-select
+zle -N zle-line-init
+
+# Sets prompt colour depending on VIMODE
+function setprompt {
+    local p=""
+    if [ -z "$PROMPT_HACK" ];then
+        p+="%B${USERNAME}@${HOST}${prompt_ccview}%~%b"
+        p+='
+'
+    fi
+
+    if [ $1 = "i" ]; then
+        p+=$'%{\e[0;31m%}>>> %{\e[0m%}' # Red for insert mode
+    else
+        p+=$'%{\e[0;32m%}>>> %{\e[0m%}' # Green for normal mode
+    fi
+    PROMPT=$p
+}
+
+if [ -n "$PROMPT_HACK" ]; then
+
+# Hack to avoid zsh rendering bug in version earlier than 4.3.4 (?): in custom widgets the multiline prompt can get updated several times after each other.
+# This multiple update is not handled correctly by zsh. The result is that last line is removed from the console buffer.
+# In fact the first line of the prompt will be printed by precmd, instead of PROMPT.
+function precmd {
+    echo "`tput bold`${USERNAME}@${HOST}${prompt_ccview}`mypwd`"
+}
+
+# Hacked pwd which will replace "/home/$USERNAME" with "~"
+function mypwd {
+    dir=`pwd`
+    finalpath=$dir
+    a=(${(s:/:)dir})
+    if [ $#a -gt 1 ]; then
+        if [ $a[1] = 'cygdrive' ]; then
+            if [ $a[4] = "$USERNAME" ]; then
+                finalpath='~'
+                if [ $#a -gt 4 ];then
+                    finalpath="${finalpath}${dir/\/cygdrive\/c\/Users\/$USERNAME/}"
+                fi
+            fi
+        elif [ $a[1] = 'home' -a $a[2] = "$USERNAME" ]; then
+            finalpath='~'
+            if [ $#a -gt 2 ]; then
+                finalpath="${finalpath}${dir/\/home\/$USERNAME/}"
+            fi
+        fi
+    fi
+    echo "$finalpath"
+}
+
+fi
+
+setprompt $VIMODE
