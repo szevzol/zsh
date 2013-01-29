@@ -1,7 +1,7 @@
 zsh
 ===
 
-My zsh settings.
+My zsh configuration.
 
 Set up
 ------
@@ -23,4 +23,4 @@ ln -s ~/etc/zsh/rc/zshrc ~/.zshrc
 The private files
 -----------------
 
-The rc/zprofile and rc/alias files will source their private counterparts zprofile.private and alias.private. These private files contain settings which I don't want to share on GitHub and which are very environment specific.
+The rc/zprofile and rc/alias files will source their private counterparts zprofile.private and alias.private. These private files contain settings which I don't want to share on GitHub and are very environment specific.
