@@ -46,9 +46,11 @@ if [ -n "$PROMPT_HACK" ]; then
 # Hack to avoid zsh rendering bug in version earlier than 4.3.4 (?): in custom widgets the multiline prompt can get updated several times after each other.
 # This multiple update is not handled correctly by zsh. The result is that last line is removed from the console buffer.
 # In fact the first line of the prompt will be printed by precmd, instead of PROMPT.
-function precmd {
+function precmd_hack {
     echo "`tput bold`${USERNAME}@${HOST}${prompt_ccview}`mypwd`"
 }
+
+precmd_functions=(precdm_hack)
 
 # Hacked pwd which will replace "/home/$USERNAME" with "~"
 function mypwd {
