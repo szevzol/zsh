@@ -41,5 +41,21 @@ bindkey "^R" history-incremental-search-backward
 # include prompt configuration
 test -s $ZSH_HOME/rc/prompt && . $ZSH_HOME/rc/prompt || true
 
+# Sets title of terminal by printing an escape sequence
+function settitle() 
+{ 
+    printf "\e]0;$@\a" 
+}
+
+# Sets the current working directory as the terminal title
+function dir_in_title() 
+{ 
+    settitle $PWD 
+}
+
+# Update terminal title to the current working directory 
+precmd_functions=(dir_in_title)
+
+# Load private zshrc file
 PRIVATE_FILE="$ZSH_HOME/rc/zshrc.private"
 test -s $PRIVATE_FILE && . $PRIVATE_FILE || true 
