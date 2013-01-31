@@ -40,3 +40,6 @@ bindkey "^R" history-incremental-search-backward
 
 # include prompt configuration
 test -s $ZSH_HOME/rc/prompt && . $ZSH_HOME/rc/prompt || true
+
+PRIVATE_FILE="$ZSH_HOME/rc/zshrc.private"
+test -s $PRIVATE_FILE && . $PRIVATE_FILE || true 
