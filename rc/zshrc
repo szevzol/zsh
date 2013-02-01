@@ -1,3 +1,6 @@
+# Use fancy globbing
+setopt extendedglob
+
 # tell zsh to parse my custom path for functions
 fpath=($ZSH_HOME/functions $fpath)
 
