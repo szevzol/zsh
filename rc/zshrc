@@ -9,7 +9,7 @@ autoload -U $ZSH_HOME/functions/*(:t)
 
 # initialize completion system
 autoload -U compinit
-compinit
+compinit -u
 
 # use ls colours for completion
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
