@@ -47,18 +47,15 @@ test -s $ZSH_HOME/rc/prompt && . $ZSH_HOME/rc/prompt || true
 # Sets title of terminal by printing an escape sequence
 function settitle() 
 { 
-    printf "\e]0;$@\a" 
+    if [ -z $TMUX ]; then
+        printf "\e]0;$@\a" 
+    fi
 }
 
 # Sets the current working directory as the terminal title
 function dir_in_title() 
 { 
-    # Use different ways outside and inside tmux session
-    if [ -z $TMUX ]; then
-        settitle ${USERNAME}@${HOST}:${PWD}
-    else
-        tmux set set-titles-string "${USERNAME}@${HOST}:${PWD}"
-    fi
+    settitle ${USERNAME}@${HOST}:${PWD}
 }
 
 # Update terminal title to the current working directory 
