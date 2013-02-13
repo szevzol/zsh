@@ -5,7 +5,7 @@ import sys
 import textwrap
 import os
 
-QUOTEPATH = os.path.dirname(os.path.abspath(sys.argv[0])) + "/../etc/quotes.txt"
+QUOTEPATH = os.path.dirname(os.path.abspath(sys.argv[0])) + "/quotes.txt"
 WRAPLEN = 80
 
 quotefile = open(QUOTEPATH, "r")
