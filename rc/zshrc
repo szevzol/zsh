@@ -53,7 +53,12 @@ function settitle()
 # Sets the current working directory as the terminal title
 function dir_in_title() 
 { 
-    settitle ${USERNAME}@${HOST}:${PWD}
+    # Use different ways outside and inside tmux session
+    if [ -z $TMUX ]; then
+        settitle ${USERNAME}@${HOST}:${PWD}
+    else
+        tmux set set-titles-string "${USERNAME}@${HOST}:${PWD}"
+    fi
 }
 
 # Update terminal title to the current working directory 
