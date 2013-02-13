@@ -28,4 +28,4 @@ EOF
 PRIVATE_FILE="$ZSH_HOME/rc/zprofile.private"
 test -s $PRIVATE_FILE && . $PRIVATE_FILE || true 
 
-$ZSH_HOME/quotes/quotes.py
+$ZSH_HOME/quotes/quote.py
