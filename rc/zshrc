@@ -53,7 +53,7 @@ function settitle()
 # Sets the current working directory as the terminal title
 function dir_in_title() 
 { 
-    settitle $PWD 
+    settitle ${USERNAME}@${HOST}:${PWD}
 }
 
 # Update terminal title to the current working directory 
