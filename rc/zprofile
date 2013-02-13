@@ -12,12 +12,6 @@ export SHELL='/bin/zsh'
 export EDITOR=vim
 export WINEDITOR=gvim
 
-# source private zprofile
-# that file contains settings of
-# PATH, MANPATH, http_proxy, CLEARCASE_AVOBS, and stuff like that
-PRIVATE_FILE="$ZSH_HOME/rc/zprofile.private"
-test -s $PRIVATE_FILE && . $PRIVATE_FILE || true 
-
 # nice welcome message
 cat <<EOF
  __      __       .__                             ._.
@@ -27,3 +21,11 @@ cat <<EOF
   \__/\  /  \___  >____/\___  >____/|__|_|  /\___  >_
        \/       \/          \/            \/     \/\/
 EOF
+
+# source private zprofile
+# that file contains settings of
+# PATH, MANPATH, http_proxy, CLEARCASE_AVOBS, and stuff like that
+PRIVATE_FILE="$ZSH_HOME/rc/zprofile.private"
+test -s $PRIVATE_FILE && . $PRIVATE_FILE || true 
+
+$ZSH_HOME/quotes/quotes.py
