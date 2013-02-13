@@ -49,6 +49,8 @@ function settitle()
 { 
     if [ -z $TMUX ]; then
         printf "\e]0;$@\a" 
+    else
+        printf "\033Ptmux;\033\033]0;$@\007\033\\"
     fi
 }
 
