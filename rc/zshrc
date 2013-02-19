@@ -25,6 +25,8 @@ zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:warnings' format 'No matches for: %d'
 zstyle ':completion:*' group-name ''
 
+eval "$($ZSH_HOME/bin/fasd --init auto)"
+
 # use smart auto correction
 setopt correct
 
