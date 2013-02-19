@@ -25,7 +25,10 @@ zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:warnings' format 'No matches for: %d'
 zstyle ':completion:*' group-name ''
 
-eval "$($ZSH_HOME/bin/fasd --init auto)"
+type fasd 2>&1 > /dev/null 
+if [ $? -eq 0 ]; then
+    eval "$(fasd --init auto)"
+fi
 
 # use smart auto correction
 setopt correct
