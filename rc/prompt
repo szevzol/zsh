@@ -28,9 +28,15 @@ zle -N zle-line-init
 function setprompt {
     local p=""
     if [ -z "$PROMPT_HACK" ];then
-        p+="%B${USERNAME}@${HOST}${prompt_ccview}%~%b"
-        p+='
+        if [ -z "$ZFTP_USER" ]; then
+            p+="%B${USERNAME}@${HOST}${prompt_ccview}%~%b"
+            p+='
 '
+        else
+            p+="%Bftp://${ZFTP_USER}@${ZFTP_HOST}${prompt_ccview}${ZFTP_PWD}%b"
+            p+='
+'
+        fi
     fi
 
     if [ $1 = "i" ]; then

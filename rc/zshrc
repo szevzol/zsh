@@ -30,6 +30,10 @@ eval "$($ZSH_HOME/bin/fasd --init auto)"
 # use smart auto correction
 setopt correct
 
+# load ftp system
+autoload -U zfinit
+zfinit
+
 # include the .alias file
 test -s $ZSH_HOME/rc/alias && . $ZSH_HOME/rc/alias || true
  
