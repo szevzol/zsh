@@ -1,5 +1,3 @@
-"OSS is a big beast" (Joe Broderick)
-ist_run, Forrest, ist_run!
 "The cheapest, fastest, and most reliable components are those that aren't there." (Gordon Bell)
 "One of my most productive days was throwing away 1000 lines of code." (Ken Thompson)
 "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it." (Brian W. Kernighan and P. J. Plauger in The Elements of Programming Style)
