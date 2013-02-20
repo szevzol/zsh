@@ -17,14 +17,6 @@ alias v=vim
 
 alias vt='v -c CtrlPTag'
 
-# set clearcase view
-function svfnc()
-{
-    /usr/atria/bin/cleartool setview -exec "~/usr/bin/zsh" `whoami`_$1
-}
-
-alias sv=svfnc
-
 alias grep='grep --color=auto'
 
 alias ls='ls $LS_OPTIONS'
