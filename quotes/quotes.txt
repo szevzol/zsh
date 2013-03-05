@@ -16,7 +16,7 @@ Hofstadter's Law: It always takes longer than you expect, even when you take int
 Every language has an optimization operator. In C++ that operator is .//.
 Theory is when you know something, but it doesn't work. Practice is when something works, but you don't know why. Programmers combine theory and practice: Nothing works and they don't know why.
 A computer is a stupid machine with the ability to do incredibly smart things, while computer programmers are smart people with the ability to do incredibly stupid things. They are, in short, a perfect match.
-Before software can be reusable it first has to be usable.
+Before software can be reusable it first has to be usable. (Ralph Johnson)
 "Program testing can be a very effective way to show the presence of bugs, but is hopelessly inadequate for showing their absence." (Edsger W. Dijkstra)
 "Code never lies, comments sometimes do." (Ron Jeffries)
 "I have found that the reason a lot of people are interested in artificial intelligence is the same reason a lot of people are interested in artificial limbs: they are missing one." (David Parnas)
