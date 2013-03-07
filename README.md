@@ -3,6 +3,9 @@ zsh
 
 My zsh configuration.
 
+This repository serves as a portable configuration for me.
+Feel free to use it but please beware of the fact that I didn't prepared it to be used by others.
+
 Set up
 ------
 
