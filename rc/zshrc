@@ -49,6 +49,12 @@ bindkey -v
 
 # In vi mode must redo this bind to use history search
 bindkey "^R" history-incremental-search-backward
+bindkey "^F" history-incremental-search-forward
+
+# Use simply the arrow keys to jump to step through commands in history
+bindkey "\e[A" history-search-backward
+bindkey "\e[B" history-search-forward
+
 
 # include prompt configuration
 test -s $ZSH_HOME/rc/prompt && . $ZSH_HOME/rc/prompt || true
