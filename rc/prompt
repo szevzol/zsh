@@ -1,13 +1,12 @@
 #" vim:syntax=zsh
 
-# This variable will be inserted to the prompt
-local prompt_ccview=" "
-
-if [ -x /usr/atria/bin/cleartool ]; then
-    # save the current clearcase view
-    export CURRENT_VIEW="$(/usr/atria/bin/cleartool pwv -s)"
-    prompt_ccview=" [$CURRENT_VIEW] "
-fi
+# Inject git information into the prompt
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git*' formats " [%b]"
+precmd() {
+    vcs_info
+}
 
 # Set VIMODE according to the current mode (default “i”, otherwise "n")
 VIMODE='i'
@@ -25,25 +24,16 @@ zle -N zle-keymap-select
 zle -N zle-line-init
 
 # Sets prompt colour depending on VIMODE
+# $1 parameter can be "i" for insert mode, "n" for normal mode
 function setprompt {
     local p=""
-    if [ -z "$PROMPT_HACK" ];then
-        if [ -z "$ZFTP_USER" ]; then
-            p+="%B${USERNAME}@${HOST}${prompt_ccview}%~%b"
-            p+='
+    p+="%B${USERNAME}@${HOST}${vcs_info_msg_0_} %~%b"
+    p+='
 '
-        else
-            p+="%Bftp://${ZFTP_USER}@${ZFTP_HOST}${prompt_ccview}${ZFTP_PWD}%b"
-            p+='
-'
-        fi
-    fi
-
-    if [ $1 = "i" ]; then
-        p+=$'%{\e[0;31m%}>>> %{\e[0m%}' # Red for insert mode
-    else
-        p+=$'%{\e[0;32m%}>>> %{\e[0m%}' # Green for normal mode
-    fi
+    color=${${1/i/31}/n/32} # Red=insert mode, green=command mode
+    p+=$'%{\e[0;'
+    p+=${color}
+    p+=$'m%}>>> %{\e[0m%}' 
     PROMPT=$p
 }
 
@@ -53,7 +43,7 @@ if [ -n "$PROMPT_HACK" ]; then
 # This multiple update is not handled correctly by zsh. The result is that last line is removed from the console buffer.
 # In fact the first line of the prompt will be printed by precmd, instead of PROMPT.
 function precmd_hack {
-    echo "`tput bold`${USERNAME}@${HOST}${prompt_ccview}`mypwd`"
+    echo "`tput bold`${USERNAME}@${HOST}`mypwd`"
 }
 
 precmd_functions=(precdm_hack)
