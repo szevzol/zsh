@@ -1,6 +1,10 @@
 # Use fancy globbing
 setopt extendedglob
 
+export DIRSTACKSIZE=8
+setopt autopushd pushdminus pushdsilent pushdtohome
+alias dh='dirs -v'
+
 # tell zsh to parse my custom path for functions
 fpath=($ZSH_HOME/functions $fpath)
 
