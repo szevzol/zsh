@@ -66,3 +66,4 @@ The best thing about a boolean is even if you are wrong, you are only off by a b
 "It's better to wait for a productive programmer to become available than it is to wait for the first available programmer to become productive." (Steve McConnell)
 "When to use iterative development? You should use iterative development only on projects that you want to succeed." (Martin Fowler, in "UML Distilled")
 "Hiring people to write code to sell is not the same as hiring people to design and build durable, usable, dependable software." (Larry Constantine [Beyond Chaos])
+"This is the number one rule: simplicity beats functionality, every single time. If you can't understand an architecture on a cold gray Monday morning before coffee, it is too complex."
