@@ -48,8 +48,12 @@ test -s $ZSH_HOME/rc/alias && . $ZSH_HOME/rc/alias || true
 export LS_OPTIONS='--color=auto'
 export GREP_OPTIONS='--color=auto'
 
-# Use vi command line mode
-bindkey -v
+if [ "$PREFERRED_BINDING" = "vi" ]; then
+    # Use vi command line mode
+    bindkey -v
+else
+    bindkey -e
+fi
 
 # In vi mode must redo this bind to use history search
 bindkey "^R" history-incremental-search-backward

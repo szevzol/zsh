@@ -11,17 +11,20 @@ precmd() {
 # Set VIMODE according to the current mode (default “i”, otherwise "n")
 VIMODE='i'
 
-# Custom widget functions to update VIMODE and update the prompt
-function zle-line-init zle-keymap-select {
-    VIMODE="${${KEYMAP/vicmd/n}/(main|viins)/i}"
-    setprompt $VIMODE
-    zle reset-prompt
-    zle -R # this is needed otherwise pressing Enter or Ctrl+C in vicmd mode will not refresh the prompt
-}
+if [ "$PREFERRED_BINDING" = "vi" ]; then
 
-# Tell zsh to use my custom widgets
-zle -N zle-keymap-select
-zle -N zle-line-init
+    # Custom widget functions to update VIMODE and update the prompt
+    function zle-line-init zle-keymap-select {
+        VIMODE="${${KEYMAP/vicmd/n}/(main|viins)/i}"
+        setprompt $VIMODE
+        zle reset-prompt
+        zle -R # this is needed otherwise pressing Enter or Ctrl+C in vicmd mode will not refresh the prompt
+    }
+
+    # Tell zsh to use my custom widgets
+    zle -N zle-keymap-select
+    zle -N zle-line-init
+fi
 
 # Sets prompt colour depending on VIMODE
 # $1 parameter can be "i" for insert mode, "n" for normal mode
@@ -33,7 +36,7 @@ function setprompt {
     color=${${1/i/31}/n/32} # Red=insert mode, green=command mode
     p+=$'%{\e[0;'
     p+=${color}
-    p+=$'m%}>>> %{\e[0m%}' 
+    p+=$'m%}> %{\e[0m%}' 
     PROMPT=$p
 }
 
