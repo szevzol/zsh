@@ -1,13 +1,5 @@
 #" vim:syntax=zsh
 
-# Inject git information into the prompt
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git*' formats " [%b]"
-precmd() {
-    vcs_info
-}
-
 # Set VIMODE according to the current mode (default “i”, otherwise "n")
 VIMODE='i'
 
@@ -30,7 +22,12 @@ fi
 # $1 parameter can be "i" for insert mode, "n" for normal mode
 function setprompt {
     local p=""
-    p+="%B${USERNAME}@${HOST}${vcs_info_msg_0_} %~%b"
+    p+="%B${USERNAME}@${HOST}"
+    if [ -n "${vcs_info_msg_0_}"  ]; then
+        p+="${vcs_info_msg_0_}%b"
+    else
+        p+=" %~%b"
+    fi
     p+='
 '
     color=${${1/i/31}/n/32} # Red=insert mode, green=command mode
@@ -76,4 +73,11 @@ function mypwd {
 
 fi
 
-setprompt $VIMODE
+# Inject git information into the prompt
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git*' formats " [%b] %r %S"
+precmd() {
+    vcs_info
+    setprompt $VIMODE
+}
