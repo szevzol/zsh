@@ -79,7 +79,7 @@ fi
 # Inject git information into the prompt
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git*' formats " [%b] %r %S"
+zstyle ':vcs_info:git*' formats " [%b] %r/%S"
 precmd() {
     vcs_info
     setprompt $VIMODE
