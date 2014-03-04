@@ -22,6 +22,9 @@ fi
 # $1 parameter can be "i" for insert mode, "n" for normal mode
 function setprompt {
     local p=""
+    if [ -n "$VIRTUAL_ENV" ]; then
+        p+="($(basename $VIRTUAL_ENV))"
+    fi
     p+="%B${USERNAME}@${HOST}"
     if [ -n "${vcs_info_msg_0_}"  ]; then
         p+="${vcs_info_msg_0_}%b"
