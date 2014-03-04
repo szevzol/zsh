@@ -1,4 +1,4 @@
-#" vim:syntax=zsh
+#" vim:filetype=zsh
 
 # Set VIMODE according to the current mode (default “i”, otherwise "n")
 VIMODE='i'
