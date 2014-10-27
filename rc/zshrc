@@ -1,7 +1,7 @@
 # Use fancy globbing
 setopt extendedglob
 
-export DIRSTACKSIZE=8
+export DIRSTACKSIZE=16
 setopt autopushd pushdminus pushdsilent pushdtohome
 alias dh='dirs -v'
 
@@ -47,6 +47,13 @@ test -s $ZSH_HOME/rc/alias && . $ZSH_HOME/rc/alias || true
 # Use colourful ls and grep
 export LS_OPTIONS='--color=auto'
 export GREP_OPTIONS='--color=auto'
+export LESS_TERMCAP_mb=$(printf '\e[01;31m') # enter blinking mode – red
+export LESS_TERMCAP_md=$(printf '\e[01;35m') # enter double-bright mode – bold, magenta
+export LESS_TERMCAP_me=$(printf '\e[0m') # turn off all appearance modes (mb, md, so, us)
+export LESS_TERMCAP_se=$(printf '\e[0m') # leave standout mode
+export LESS_TERMCAP_so=$(printf '\e[01;33m') # enter standout mode – yellow
+export LESS_TERMCAP_ue=$(printf '\e[0m') # leave underline mode
+export LESS_TERMCAP_us=$(printf '\e[04;36m') # enter underline mode – cyan
 
 if [ "$PREFERRED_BINDING" = "vi" ]; then
     # Use vi command line mode
@@ -68,24 +75,24 @@ bindkey "\e[B" history-search-forward
 test -s $ZSH_HOME/rc/prompt && . $ZSH_HOME/rc/prompt || true
 
 # Sets title of terminal by printing an escape sequence
-function settitle() 
-{ 
+function settitle()
+{
     if [ -z $TMUX ]; then
-        printf "\e]0;$@\a" 
+        printf "\e]0;$@\a"
 #    else
 #        printf "\033Ptmux;\033\033]0;$@\007\033\\"
     fi
 }
 
 # Sets the current working directory as the terminal title
-function dir_in_title() 
-{ 
+function dir_in_title()
+{
     settitle ${USERNAME}@${HOST}:${PWD}
 }
 
-# Update terminal title to the current working directory 
+# Update terminal title to the current working directory
 precmd_functions=(dir_in_title)
 
 # Load private zshrc file
 PRIVATE_FILE="$ZSH_HOME/rc/zshrc.private"
-test -s $PRIVATE_FILE && . $PRIVATE_FILE || true 
+test -s $PRIVATE_FILE && . $PRIVATE_FILE || true
