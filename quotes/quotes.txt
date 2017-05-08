@@ -68,3 +68,4 @@ The best thing about a boolean is even if you are wrong, you are only off by a b
 "Hiring people to write code to sell is not the same as hiring people to design and build durable, usable, dependable software." (Larry Constantine [Beyond Chaos])
 "This is the number one rule: simplicity beats functionality, every single time. If you can't understand an architecture on a cold gray Monday morning before coffee, it is too complex."
 "Programs must be written for people to read, and only incidentally for machines to execute" (Abelson / Susssman)
+"Modifying untested legacy code is like playing Jenga — you never really know ahead of time which brick removal is going to cause an avalanche of problems" (Erik Dietrich)
